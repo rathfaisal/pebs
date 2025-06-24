@@ -12,6 +12,11 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+    public function activities()
+    {
+        return $this->belongsToMany(Activity::class);
+    }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -21,6 +26,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_admin',
+        'is_super_admin',
     ];
 
     /**
