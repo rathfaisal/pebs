@@ -3,7 +3,7 @@
 @section('title', 'Create Admin')
 
 @section('content')
-    <h1>Create New Admin</h1>
+    {{-- <h1>Create New Admin</h1> --}}
 
     <form action="{{ route('sa.admin.store') }}" method="POST">
         @csrf

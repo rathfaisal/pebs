@@ -3,7 +3,7 @@
 @section('title', 'Edit Admin')
 
 @section('content')
-    <h1>Edit Admin</h1>
+    {{-- <h1>Edit Admin</h1> --}}
 
     <form action="{{ route('sa.admin.update', $admin->id) }}" method="POST">
         @csrf
