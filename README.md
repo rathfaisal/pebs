@@ -1,61 +1,109 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# PeBS Management System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Overview
 
-## About Laravel
+A centralized, interactive web platform for PeBS Zon 20 under MBSA that serves as the official information hub, facilitates youth registration, and manages program activities. The system supports multiple user roles (Super Admin, Admin, User) and provides dashboards and management features for each.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## System Architecture
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### User Roles & Flows
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Super Admin Dashboard**
+  - Manage Admins (CRUD)
+  - View and manage all activities
+  - Restore deleted activities
 
-## Learning Laravel
+- **Admin Dashboard**
+  - Manage activities (CRUD)
+  - View registered users for activities
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **User Dashboard**
+  - View available activities
+  - Register for activities
+  - View registration status
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Main Features
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- User authentication (Laravel Breeze)
+- Role-based access (Super Admin, Admin, User)
+- Activity management (create, edit, delete, restore)
+- User registration for activities
+- Admin management by Super Admin
+- Responsive UI with Blade and Bootstrap
 
-## Laravel Sponsors
+## Database Schema
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- **users**
+  - id, name, email, password, is_admin, is_super_admin, timestamps
+- **activities**
+  - id, title, description, date, picture, location, deleted_at, timestamps
+- **activity_user** (pivot)
+  - activity_id, user_id
 
-### Premium Partners
+## Technology Stack
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+- **Backend:** PHP 8.2+ with Laravel 12.x
+- **Database:** MySQL/MariaDB
+- **Frontend:** Blade templating, Bootstrap 5, Tailwind CSS (for some components)
+- **Authentication:** Laravel Breeze
+- **Task Runner:** Vite
+- **Testing:** PHPUnit
 
-## Contributing
+## Security Features
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- Laravel authentication with role-based access control
+- CSRF protection
+- Form validation
+- Password hashing
 
-## Code of Conduct
+## Getting Started
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+1. **Clone the repository**
+   ```bash
+   git clone <your-repo-url>
+   cd pebs
+   ```
 
-## Security Vulnerabilities
+2. **Install dependencies**
+   ```bash
+   composer install
+   npm install
+   ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+3. **Copy environment file**  
+   Set your database and mail credentials.
+   ```bash
+   cp .env.example .env
+   ```
+
+4. **Generate application key**
+   ```bash
+   php artisan key:generate
+   ```
+
+5. **Run migrations**
+   ```bash
+   php artisan migrate
+   ```
+
+6. **(Optional) Seed Super Admin**
+   ```bash
+   php artisan db:seed --class=SuperAdminSeeder
+   ```
+
+7. **Serve the application**
+   ```bash
+   php artisan serve
+   npm run dev
+   ```
+
+## Requirements
+
+- PHP >= 8.2
+- Composer
+- Node.js & NPM
+- MySQL/MariaDB
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is proprietary software developed for PeBS Zon 20 under MBSA.
