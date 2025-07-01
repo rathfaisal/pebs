@@ -22,6 +22,21 @@ A centralized, interactive web platform for PeBS Zon 20 under MBSA that serves a
   - Register for activities
   - View registration status
 
+#### User Flow Diagram
+
+```mermaid
+flowchart TD
+    A["Super Admin"] -->|Manages| B["Admin"]
+    A -->|Manages| C["Activities"]
+    B -->|Manages| C
+    B -->|Views| D["Registered Users"]
+    E["User"] -->|Registers| C
+    E -->|Views| C
+    C -->|Has| D
+    D -->|Belongs to| C
+    D -->|Is| E
+```
+
 ### Main Features
 
 - User authentication (Laravel Breeze)
@@ -39,6 +54,37 @@ A centralized, interactive web platform for PeBS Zon 20 under MBSA that serves a
   - id, title, description, date, picture, location, deleted_at, timestamps
 - **activity_user** (pivot)
   - activity_id, user_id
+
+#### Database Schema Diagram
+
+```mermaid
+erDiagram
+    users {
+        int id
+        string name
+        string email
+        string password
+        boolean is_admin
+        boolean is_super_admin
+        string timestamps
+    }
+    activities {
+        int id
+        string title
+        string description
+        datetime date
+        string picture
+        string location
+        datetime deleted_at
+        string timestamps
+    }
+    activity_user {
+        int activity_id
+        int user_id
+    }
+    users ||--o{ activity_user : registers
+    activities ||--o{ activity_user : has
+```
 
 ## Technology Stack
 
