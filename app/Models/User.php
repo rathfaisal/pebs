@@ -14,7 +14,7 @@ class User extends Authenticatable
 
     public function activities()
     {
-        return $this->belongsToMany(Activity::class);
+        return $this->belongsToMany(Activity::class)->withPivot('feedback');
     }
 
     /**

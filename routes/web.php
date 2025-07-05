@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+// use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Shared\ProfileController;
 use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
@@ -15,11 +16,11 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+// Route::middleware('auth')->group(function () {
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// });
 
 require __DIR__.'/auth.php';
 
@@ -27,6 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/index', [UserController::class, 'index'])->name('home');
     Route::get('/activity/{id}', [UserController::class, 'show'])->name('user.activity.show');
     Route::post('/activity/{id}/register', [UserController::class, 'register'])->name('user.activity.register');
+    Route::post('/activity/{id}/feedback', [UserController::class, 'feedback'])->name('user.activity.feedback'); // Feedback submission
 });
 
 Route::prefix('admin')
@@ -58,4 +60,11 @@ Route::prefix('shared')
         Route::post('/activity/{activity}/restore', [ActivityController::class, 'restore'])->name('s.activity.restore');
         Route::get('/activity/{activity}/registered-users', [ActivityController::class, 'registeredUsers'])->name('s.activity.registeredUsers');
         Route::delete('/activity/{activity}/unregister/{user}', [ActivityController::class, 'unregisterUser'])->name('s.activity.unregister');
+        Route::get('/activity/{activity}/gallery', [ActivityController::class, 'gallery'])->name('s.activity.gallery');
+        Route::get('/activity/{activity}/gallery/add', [ActivityController::class, 'addGalleryImage'])->name('s.activity.gallery.add');
+        Route::post('/activity/{activity}/gallery/store', [ActivityController::class, 'storeGalleryImage'])->name('s.activity.gallery.store');
+        Route::delete('/activity/{activity}/gallery/{gallery}/delete', [ActivityController::class, 'deleteGalleryImage'])->name('s.activity.gallery.delete');
+        Route::get('/profile', [ProfileController::class, 'show'])->name('shared.profile.show');
+        Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('shared.profile.edit');
+        Route::post('/profile/update', [ProfileController::class, 'update'])->name('shared.profile.update');
     });

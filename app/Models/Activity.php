@@ -12,6 +12,11 @@ class Activity extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class)->withPivot('feedback');
+    }
+    
+    public function galleries()
+    {
+        return $this->hasMany(Gallery::class);
     }
 }

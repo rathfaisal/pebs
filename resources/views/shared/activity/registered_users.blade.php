@@ -19,6 +19,7 @@
             <tr>
                 <th>Name</th>
                 <th>Email</th>
+                <th>Feedback</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -27,6 +28,7 @@
             <tr>
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
+                <td>{{ $user->pivot->feedback ?? '-' }}</td>
                 <td>
                     <form action="{{ route('s.activity.unregister', [$activity->id, $user->id]) }}" method="POST" onsubmit="return confirm('Are you sure you want to remove this registration?');">
                         @csrf

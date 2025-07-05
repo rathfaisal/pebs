@@ -34,7 +34,7 @@
             <label for="picture" class="form-label">Picture</label>
             <input type="file" class="form-control" id="picture" name="picture">
             @if($activity->picture)
-                <img src="{{ asset('images/' . $activity->picture) }}" alt="Activity Picture" width="100">
+                <img src="{{ asset('storage/' . $activity->picture) }}" alt="Activity Picture" width="100">
             @endif
         </div>
         <div class="mb-3">

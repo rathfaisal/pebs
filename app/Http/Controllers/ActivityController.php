@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Models\Activity;
+use App\Models\Gallery;
 use Illuminate\Support\Facades\Auth;
 
 class ActivityController extends Controller
@@ -41,9 +42,9 @@ class ActivityController extends Controller
 
         if ($request->hasFile('picture')) {
             $image = $request->file('picture');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images'), $imageName);
-            $activity->picture = $imageName;
+            $imageName = uniqid('activity_', true) . '.' . $image->getClientOriginalExtension();
+            $imagePath = $image->storeAs('activities', $imageName, 'public');
+            $activity->picture = $imagePath;
         }
 
         $activity->save();
@@ -73,9 +74,9 @@ class ActivityController extends Controller
 
         if ($request->hasFile('picture')) {
             $image = $request->file('picture');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images'), $imageName);
-            $activity->picture = $imageName;
+            $imageName = uniqid('activity_', true) . '.' . $image->getClientOriginalExtension();
+            $imagePath = $image->storeAs('activities', $imageName, 'public');
+            $activity->picture = $imagePath;
         }
 
         $activity->save();
@@ -114,5 +115,52 @@ class ActivityController extends Controller
         $activity = Activity::findOrFail($activityId);
         $activity->users()->detach($userId);
         return redirect()->route('s.activity.registeredUsers', $activityId)->with('success', 'User registration removed successfully.');
+    }
+
+    public function gallery($activityId)
+    {
+        $activity = Activity::findOrFail($activityId);
+        $gallery = $activity->galleries ?? [];
+        return view('shared.activity.gallery', compact('activity', 'gallery'));
+    }
+
+    public function addGalleryImage($activityId)
+    {
+        $activity = Activity::findOrFail($activityId);
+        return view('shared.activity.add_gallery_image', compact('activity'));
+    }
+
+    public function storeGalleryImage(Request $request, $activityId)
+    {
+        $request->validate([
+            'images' => 'required',
+            'images.*' => 'image|max:2048',
+        ]);
+
+        $activity = Activity::findOrFail($activityId);
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $imageName = uniqid('gallery_', true) . '.' . $image->getClientOriginalExtension();
+                $imagePath = $image->storeAs('galleries', $imageName, 'public');
+
+                $gallery = new Gallery();
+                $gallery->activity_id = $activity->id;
+                $gallery->image_path = $imagePath;
+                $gallery->save();
+            }
+        }
+
+        return redirect()->route('s.activity.gallery', $activity->id)->with('success', 'Images added to gallery successfully.');
+    }
+
+    public function deleteGalleryImage($activityId, $galleryId)
+    {
+        $gallery = Gallery::where('activity_id', $activityId)->findOrFail($galleryId);
+        // Delete the file from storage
+        if ($gallery->image_path && \Storage::disk('public')->exists($gallery->image_path)) {
+            \Storage::disk('public')->delete($gallery->image_path);
+        }
+        $gallery->delete();
+        return redirect()->route('s.activity.gallery', $activityId)->with('success', 'Image deleted from gallery successfully.');
     }
 }

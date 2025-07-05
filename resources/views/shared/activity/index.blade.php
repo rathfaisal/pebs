@@ -25,6 +25,7 @@
                 <th>Date</th>
                 <th>Location</th>
                 <th>Registered Users</th>
+                <th>Gallery</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -37,6 +38,10 @@
                 <td>{{ $activity->location }}</td>
                 <td>
                     <a href="{{ route('s.activity.registeredUsers', $activity->id) }}" class="btn btn-info btn-sm">View Registered Users</a>
+                </td>
+                <td>
+                    <a href="{{ route('s.activity.gallery', $activity->id) }}" class="btn btn-secondary btn-sm">View Gallery</a>
+                    <a href="{{ route('s.activity.gallery.add', $activity->id) }}" class="btn btn-success btn-sm">Add Image</a>
                 </td>
                 <td>
                     <a href="{{ route('s.activity.edit', $activity->id) }}" class="btn btn-sm btn-warning">Edit</a>

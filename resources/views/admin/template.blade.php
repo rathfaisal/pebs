@@ -35,6 +35,9 @@
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
+                        <a class="nav-link" href="{{ route('shared.profile.show') }}">Profile</a>
+                    </li>
+                    <li class="nav-item">
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <button type="submit" class="btn btn-link nav-link">Logout</button>

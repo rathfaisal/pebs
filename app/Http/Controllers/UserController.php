@@ -46,4 +46,22 @@ class UserController extends Controller
         }
         return redirect()->route('user.activity.show', $activity->id)->with('success', 'You have registered for this activity.');
     }
+
+    public function feedback(Request $request, $id)
+    {
+        $request->validate([
+            'feedback' => 'required|string|max:1000',
+        ]);
+        $user = auth()->user();
+        $activity = Activity::findOrFail($id);
+        // Only allow feedback if user is registered
+        if (!$user->activities->contains($activity->id)) {
+            return redirect()->route('user.activity.show', $activity->id)->with('error', 'You are not registered for this activity.');
+        }
+        // Save feedback in the pivot table
+        $user->activities()->updateExistingPivot($activity->id, [
+            'feedback' => $request->feedback,
+        ]);
+        return redirect()->route('user.activity.show', $activity->id)->with('success', 'Thank you for your feedback!');
+    }
 }
