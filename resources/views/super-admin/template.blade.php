@@ -30,7 +30,10 @@
                         <a class="nav-link active" aria-current="page" href="{{ route('sa.admin.index') }}">Home</a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" href="{{ route('s.activity.index') }}">Activity</a>
+                        <a class="nav-link" href="{{ route('s.activity.index') }}">Activity</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('announcements.index') }}">Announcement</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">

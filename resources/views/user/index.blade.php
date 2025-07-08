@@ -14,10 +14,23 @@
     <div class="row mb-4">
         <div class="col-12">
             <div class="card mb-3">
-                <div class="card-header bg-primary text-white">Latest News</div>
+                <div class="card-header bg-primary text-white">Announcements</div>
                 <div class="card-body">
-                    <strong>Important Announcement!</strong><br>
-                    Stay tuned for upcoming events and updates. More details will be posted soon.
+                    @php
+                        $announcements = \App\Models\Announcement::latest()->take(3)->get();
+                    @endphp
+                    @if($announcements->count() > 0)
+                        @foreach($announcements as $announcement)
+                            <h5 class="card-title">{{ $announcement->title }}</h5>
+                            <p class="card-text">{{ $announcement->description }}</p>
+                            @if($announcement->image_path)
+                                <img src="{{ asset('storage/' . $announcement->image_path) }}" alt="Announcement Image" class="img-fluid">
+                            @endif
+                            <hr>
+                        @endforeach
+                    @else
+                        <p>No announcements found.</p>
+                    @endif
                 </div>
             </div>
         </div>

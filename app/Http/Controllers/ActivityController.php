@@ -10,6 +10,17 @@ use Illuminate\Support\Facades\Auth;
 
 class ActivityController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            $user = auth()->user();
+            if (!$user || (!$user->is_super_admin && !$user->is_admin)) {
+                abort(403, 'Unauthorized action.');
+            }
+            return $next($request);
+        });
+    }
+
     public function index()
     {
         $activities = Activity::with('users')->get();

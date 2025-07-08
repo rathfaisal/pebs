@@ -28,6 +28,19 @@ class ProfileController extends Controller
             'email' => 'required|email|max:255|unique:users,email,' . $user->id,
             'password' => 'nullable|string|min:8|confirmed',
         ]);
+
+        if ($request->filled('password')) {
+            $request->validate([
+                'old_password' => 'required|string',
+            ]);
+
+            if (!Auth::attempt(['email' => $user->email, 'password' => $request->old_password])) {
+                return back()->withErrors([
+                    'old_password' => 'The provided password does not match our records.',
+                ]);
+            }
+        }
+
         $user->name = $request->name;
         $user->email = $request->email;
         if ($request->filled('password')) {

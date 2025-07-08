@@ -29,9 +29,9 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{{ route('s.activity.index') }}">Activity</a>
                     </li>
-                    {{-- <li class="nav-item">
-                    <a class="nav-link" href="#">Activity</a>
-                    </li> --}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('announcements.index') }}">Announcement</a>
+                    </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">

@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ActivityController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AnnouncementController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,6 +25,7 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 
+// User routes
 Route::middleware('auth')->group(function () {
     Route::get('/index', [UserController::class, 'index'])->name('home');
     Route::get('/activity/{id}', [UserController::class, 'show'])->name('user.activity.show');
@@ -31,12 +33,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/activity/{id}/feedback', [UserController::class, 'feedback'])->name('user.activity.feedback'); // Feedback submission
 });
 
+// Admin routes
 Route::prefix('admin')
     ->middleware(['auth', 'isAdmin'])
     ->group(function () {
 
     });
 
+// Super Admin routes
 Route::prefix('superadmin')
     ->middleware(['auth', 'isSuperAdmin'])
     ->group(function () {
@@ -48,6 +52,7 @@ Route::prefix('superadmin')
         Route::delete('/admin/{id}/delete', [SuperAdminController::class, 'destroy'])->name('sa.admin.destroy');
     });
 
+// Shared routes
 Route::prefix('shared')
     ->middleware(['auth'])
     ->group(function () {
@@ -67,4 +72,10 @@ Route::prefix('shared')
         Route::get('/profile', [ProfileController::class, 'show'])->name('shared.profile.show');
         Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('shared.profile.edit');
         Route::post('/profile/update', [ProfileController::class, 'update'])->name('shared.profile.update');
+        Route::get('/announcements', [AnnouncementController::class, 'index'])->name('announcements.index');
+        Route::get('/announcements/create', [AnnouncementController::class, 'create'])->name('announcements.create');
+        Route::post('/announcements', [AnnouncementController::class, 'store'])->name('announcements.store');
+        Route::get('/announcements/{id}/edit', [AnnouncementController::class, 'edit'])->name('announcements.edit');
+        Route::put('/announcements/{id}', [AnnouncementController::class, 'update'])->name('announcements.update');
+        Route::delete('/announcements/{id}', [AnnouncementController::class, 'destroy'])->name('announcements.destroy');
     });

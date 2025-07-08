@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Announcement;
 use App\Models\Activity;
 
 class UserController extends Controller
@@ -25,7 +26,8 @@ class UserController extends Controller
         $activities = Activity::all();
         $user = auth()->user();
         $registeredIds = $user->activities->pluck('id')->toArray();
-        return view('user.index', compact('activities', 'registeredIds'));
+        $announcement = Announcement::latest()->first();
+        return view('user.index', compact('activities', 'registeredIds', 'announcement'));
     }
 
     public function show($id)
