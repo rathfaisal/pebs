@@ -104,7 +104,7 @@
             <div class="row align-items-start justify-content-between">
                 <div class="col-md-3 text-start text-md-start mb-md-0 d-flex flex-column align-items-center align-items-md-start justify-content-center gap-2">
                     <img src="{{ asset('images/pebs-logo.png') }}" alt="PEBS Logo" width="100" height="100">
-                    <div class="text-start w-100">
+                    <div class="text-center text-md-start w-100">
                         <div class="fw-bold">Management System</div>
                         <div class="small">Zon 20 MBSA</div>
                     </div>

@@ -27,6 +27,7 @@
     </div>
 
     {{-- Announcement Section --}}
+    {{-- Upcoming Activities Section --}}
     <div class="row mb-5 mt-5">
         <div class="col-12">
             <div class="card border-0 mb-3 animate__animated animate__fadeInUp" style="background: rgba(255, 255, 255, 0.95);">
@@ -160,25 +161,38 @@
                 </div>
                 <div class="card-body border-0 py-4">
                     @php
-                        $today = date('Y-m-d');
-                        $sortedActivities = $activities->filter(function($a) use ($today) {
-                            return $a->date >= $today;
+                        // Get current time
+                        $now = \Carbon\Carbon::now();
+                        // Desktop: Get up to 6 upcoming activities (not ended more than 2 hours ago)
+                        $sortedActivities = $activities->filter(function($a) use ($now) {
+                            $activityEnd = \Carbon\Carbon::parse($a->date)->addHours(2);
+                            return $activityEnd->greaterThan($now);
                         })->sortBy('date')->take(6)->values();
+                        // Mobile: Get up to 10 upcoming activities (not ended more than 2 hours ago)
+                        $mobileActivities = $activities->filter(function($a) use ($now) {
+                            $activityEnd = \Carbon\Carbon::parse($a->date)->addHours(2);
+                            return $activityEnd->greaterThan($now);
+                        })->sortBy('date')->take(10)->values();
                     @endphp
+                    {{-- Show activities if any upcoming ones exist --}}
                     @if($sortedActivities->count())
-                        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                        {{-- Desktop grid: up to 6 activities, 3 columns on large screens --}}
+                        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 d-none d-sm-flex">
+                            {{-- Loop through each activity for desktop --}}
                             @foreach($sortedActivities as $idx => $activity)
                                 <div class="col d-flex">
+                                    {{-- Activity card for desktop --}}
                                     <div class="card h-100 w-100 border-0 shadow-sm activity-card position-relative animate__animated animate__fadeInUp p-0 overflow-hidden" style="background: #222; min-height: 320px;">
+                                        {{-- Card background image --}}
                                         <div class="activity-bg-img position-absolute top-0 start-0 w-100 h-100" style="background: url('{{ asset('storage/' . ($activity->image_path ?? 'images/pebs-logo.png')) }}') center center/cover no-repeat; opacity:0.25; z-index:1;"></div>
                                         <div class="card-body d-flex flex-column justify-content-between position-relative" style="z-index:2; min-height:320px;">
                                             <div class="row w-100 mb-2 g-0 align-items-start">
                                                 <div class="col-8 pe-1">
-                                                    {{-- activity title --}}
+                                                    {{-- Activity title --}}
                                                     <h5 class="card-title fw-bold mb-0 text-uppercase text-wrap" style="font-size:1.1rem; max-width:100%;" title="{{ $activity->title }}">{{ $activity->title }}</h5>
                                                 </div>
                                                 <div class="col-4 ps-1 d-flex justify-content-end">
-                                                    {{-- event date badge at top right corner --}}
+                                                    {{-- Activity date --}}
                                                     <span class="px-3 py-2" style="font-size:0.95em;background-color:#E97C77; color:#fff; border-radius:0.5rem; display: inline-block; white-space:nowrap;">
                                                         <i class="bi bi-calendar-event me-1"></i>
                                                         {{ \Carbon\Carbon::parse($activity->date)->format('d M Y') }}
@@ -186,9 +200,9 @@
                                                 </div>
                                             </div>
                                             <div class="d-flex w-100 align-items-end justify-content-end gap-2" style="position:absolute;bottom:1rem;right:0;padding:0 1rem;">
-                                                {{-- countdown timer --}}
+                                                {{-- Countdown timer --}}
                                                 <span class="countdown-timer text-white small fw-bold" data-date="{{ $activity->date }}" style="background: #E97C77; border-radius:8px; padding:0.25rem 0.75rem;"></span>
-                                                {{-- view button --}}
+                                                {{-- View button --}}
                                                 <a href="{{ route('user.activity.show', $activity->id) }}"
                                                    class="btn btn-sm px-4 rounded"
                                                    style="background-color:#DA251D ;color:#fff;transition:background 0.2s,color 0.2s;"
@@ -203,6 +217,66 @@
                                 </div>
                             @endforeach
                         </div>
+                        {{-- Mobile grid: up to 10 activities, 2 columns --}}
+                        <div class="d-block d-sm-none">
+                            <div class="row g-3">
+                                {{-- Loop through each activity for mobile --}}
+                                @foreach($mobileActivities as $activity)
+                                    <div class="col-6 d-flex">
+                                        {{-- Activity card for mobile --}}
+                                        <div class="card h-100 w-100 border-0 shadow-sm activity-card position-relative p-0 overflow-hidden mb-3"
+                                            style="background: url('{{ asset('storage/' . ($activity->image_path ?? 'images/pebs-logo.png')) }}') center center/cover no-repeat, #222; min-height: 180px;">
+                                            {{-- Card background overlay --}}
+                                            <div class="position-absolute top-0 start-0 w-100 h-100" style="background: rgba(20,20,20,0.55); z-index:1;"></div>
+                                            <div class="card-body d-flex flex-column position-relative" style="z-index:2; min-height:180px; padding:0.75rem 0.5rem;">
+                                                <div class="mb-2">
+                                                    {{-- Activity title --}}
+                                                    <h5 class="card-title fw-bold mb-0 text-uppercase text-wrap activity-title-mobile"
+                                                        title="{{ $activity->title }}">{{ $activity->title }}</h5>
+                                                </div>
+                                                <div class="d-flex justify-content-between align-items-end w-100" style="position:absolute;left:0;right:0;bottom:0.75rem;padding:0 0.25rem;">
+                                                    {{-- Activity date --}}
+                                                    <span class="d-inline-flex align-items-center justify-content-start px-2 py-1 flex-shrink-0"
+                                                        style="font-size:0.60em;background-color:#E97C77; color:#fff; border-radius:0.5rem; height:28px; min-width:0; max-width:110px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                                                        {{ \Carbon\Carbon::parse($activity->date)->format('d M Y') }}
+                                                    </span>
+                                                    {{-- View button --}}
+                                                    <a href="{{ route('user.activity.show', $activity->id) }}"
+                                                       class="btn btn-sm px-2 py-1 rounded d-inline-flex align-items-center justify-content-center ms-auto"
+                                                       style="font-size:0.70em;height:28px;min-width:48px;background-color:#DA251D ;color:#fff;transition:background 0.2s,color 0.2s;"
+                                                    >
+                                                        <span>View</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        {{-- Styles for activity cards and mobile title truncation --}}
+                        <style>
+                        .activity-card .activity-bg-img { pointer-events:none; }
+                        .activity-card .card-title.text-shadow { text-shadow: 0 2px 8px #fff, 0 1px 2px #000; }
+                        .activity-card .card-body { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(5px); }
+                        /* Mobile activity card title: smaller font, 2 lines max, ellipsis */
+                        @media (max-width: 576px) {
+                            .activity-title-mobile {
+                                font-size: 0.62rem !important;
+                                line-height: 1.15;
+                                max-width: 100%;
+                                display: -webkit-box;
+                                -webkit-line-clamp: 3;
+                                -webkit-box-orient: vertical;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                white-space: normal !important;
+                                min-height: 1.5em;
+                            }
+                        }
+                        
+                        </style>
+                        {{-- Desktop & mobile countdown timer script --}}
                         <script>
                         document.addEventListener('DOMContentLoaded', function() {
                             function updateCountdowns() {
@@ -214,9 +288,7 @@
                                     if (diff > 0) {
                                         var days = Math.floor(diff / (1000*60*60*24));
                                         var hours = Math.floor((diff / (1000*60*60)) % 24);
-                                        // var mins = Math.floor((diff / (1000*60)) % 60); // if you want to include minutes
                                         el.textContent = days + 'd ' + hours + 'h ';
-                                        // el.textContent = days + 'd ' + hours + 'h ' + mins + 'm left'; // if you want to include minutes
                                     } else {
                                         el.textContent = 'Started';
                                     }
@@ -224,14 +296,8 @@
                             }
                             updateCountdowns();
                             setInterval(updateCountdowns, 360000); // update every 1 hour
-                            // setInterval(updateCountdowns, 60000); // if you want to include minutes and update every minutes
                         });
                         </script>
-                        <style>
-                        .activity-card .activity-bg-img { pointer-events:none; }
-                        .activity-card .card-title.text-shadow { text-shadow: 0 2px 8px #fff, 0 1px 2px #000; }
-                        .activity-card .card-body { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(5px); }
-                        </style>
                     @else
                         <div class="text-center text-black-50 py-5">
                             <i class="bi bi-emoji-frown fs-1 mb-2"></i>
@@ -263,9 +329,9 @@
                         @foreach($galleryImages as $image)
                             <div class="bento-item position-relative overflow-hidden rounded-3 shadow-sm gallery-popup-trigger" tabindex="0" data-img="{{ asset('storage/' . $image->image_path) }}" data-title="{{ $image->activity->title ?? '' }}" data-date="{{ $image->activity->date ?? '' }}" data-location="{{ $image->activity->location ?? '' }}" style="cursor:pointer;">
                                 <img src="{{ asset('storage/' . $image->image_path) }}" alt="Gallery Image" class="w-100 h-100 object-fit-cover" style="object-fit:cover;">
-                                <div class="bento-overlay position-absolute bottom-0 start-0 w-100 px-2 py-1" style="background:rgba(0,0,0,0.45);color:#fff;font-size:0.95em;">
+                                {{-- <div class="bento-overlay position-absolute bottom-0 start-0 w-100 px-2 py-1" style="background:rgba(0,0,0,0.45);color:#fff;font-size:0.95em;">
                                     <span class="fw-semibold">{{ $image->activity->title ?? '' }}</span>
-                                </div>
+                                </div> --}}
                             </div>
                         @endforeach
                     </div>
@@ -273,7 +339,7 @@
                     <div id="galleryModal" class="modal fade" tabindex="-1" aria-hidden="true">
                       <div class="modal-dialog modal-dialog-centered modal-lg">
                         <div class="modal-content">
-                          <div class="modal-header">
+                          <div class="modal-header border-0">
                             <h5 class="modal-title" id="galleryModalTitle"></h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                           </div>
@@ -311,7 +377,28 @@
                             .bento-overlay { background: linear-gradient(0deg, rgba(0,0,0,0.55) 80%, rgba(0,0,0,0.05) 100%); }
                             @media (max-width: 1200px) { .bento-gallery-grid { grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(8, 120px); } }
                             @media (max-width: 768px) { .bento-gallery-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(12, 120px); } }
-                            @media (max-width: 576px) { .bento-gallery-grid { grid-template-columns: 1fr; grid-template-rows: repeat(24, 120px); } }
+
+                            @media (max-width: 576px) {
+                                .bento-gallery-grid {
+                                    display: grid !important;
+                                    grid-template-columns: repeat(3, 1fr) !important;
+                                    grid-template-rows: repeat(3, 120px) !important;
+                                    gap: 18px;
+                                }
+                                .bento-item {
+                                    grid-column: span 1 !important;
+                                    grid-row: span 1 !important;
+                                }
+                                .bento-item:nth-child(1) { grid-row: 1 / span 1 !important; }
+                                .bento-item:nth-child(2) { grid-row: 1 / span 1 !important; }
+                                .bento-item:nth-child(3) { grid-row: 1 / span 1 !important; }
+                                .bento-item:nth-child(4) { grid-row: 2 / span 1 !important; }
+                                .bento-item:nth-child(5) { grid-row: 2 / span 1 !important; }
+                                .bento-item:nth-child(6) { grid-row: 2 / span 1 !important; }
+                                .bento-item:nth-child(7) { grid-row: 3 / span 1 !important; }
+                                .bento-item:nth-child(8) { grid-row: 3 / span 1 !important; }
+                                .bento-item:nth-child(9) { grid-row: 3 / span 1 !important; }
+                            }
                         `;
                         document.head.appendChild(style);
 
