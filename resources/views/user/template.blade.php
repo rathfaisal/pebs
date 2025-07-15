@@ -74,7 +74,7 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                             <li>
-                                <a class="dropdown-item" href="{{ route('shared.profile.show') }}" style="display:flex;align-items:center;gap:8px;">
+                                <a class="dropdown-item" href="{{ route('shared.profile.edit') }}" style="display:flex;align-items:center;gap:8px;">
                                     
                                     <span style="line-height:1;">Profile</span>
                                 </a>
