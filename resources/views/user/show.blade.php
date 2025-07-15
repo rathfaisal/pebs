@@ -4,18 +4,18 @@
 
 @section('content')
     <div class="card p-4 mb-4 bg-white border-0" style="width: 100%; margin: 0; position: relative;">
-        <div class="d-flex flex-row" style="gap: 2rem;">
+        <div class="row g-4 flex-column flex-md-row">
             <!-- Left Section: Picture (40%) -->
-            <div style="flex: 0 0 40%; max-width: 40%; display: flex; align-items: center; justify-content: center;">
+            <div class="col-12 col-md-5 d-flex align-items-center justify-content-center">
                 @if($activity->picture)
-                    <img src="{{ asset('storage/' . $activity->picture) }}" alt="Activity Image" class="rounded shadow-lg" style="max-width:90%; max-height:400px; object-fit:cover;">
+                    <img src="{{ asset('storage/' . $activity->picture) }}" alt="Activity Image" class="rounded shadow-lg w-100" style="max-width:90%; max-height:400px; object-fit:cover;">
                 @endif
             </div>
 
             <!-- Right Section: Details (60%) -->
-            <div style="flex: 0 0 60%; max-width: 55%;">
+            <div class="col-12 col-md-7" style="max-width: 100%;">
                 <!-- Title & Location Section -->
-                <div class="mb-5 text-black" style="">
+                <div class="mb-5 text-black">
                     <h1 class="fw-bold text-uppercase mb-1">{{ $activity->title }}</h1>
                     @if($activity->location)
                         <p class="text-black-50">Happening at: <strong class="fw-medium text-uppercase text-black">{{ $activity->location }}</strong></p>
@@ -24,17 +24,17 @@
 
                 <!-- Date Section -->
                 <div class="mb-5">
-                    <div class="d-flex " style="gap: 1rem; align-items: center;">
+                    <div class="row g-2 align-items-center">
                         <!-- Date Side -->
-                        <div style="flex:0 0; max-width:100px; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-                            <div class="p-2 text-center rounded bg-light border" style="min-width:70px;">
+                        <div class="col-4 col-sm-3 col-md-4 d-flex flex-column justify-content-center align-items-center">
+                            <div class="p-2 text-center rounded bg-light border w-100" style="min-width:70px;">
                                 <span class="text-uppercase small">{{ \Carbon\Carbon::parse($activity->date)->format('M') }}</span><br>
                                 <span class="fw-bold fs-4">{{ \Carbon\Carbon::parse($activity->date)->format('d') }}</span>
                             </div>
                         </div>
                         <!-- Day & Time Side -->
-                        <div class="" style="flex:1; display:flex; flex-direction:column;">
-                            <div class="">
+                        <div class="col-8 col-sm-9 col-md-8 d-flex flex-column">
+                            <div>
                                 <span class="fw-bold text-uppercase">{{ \Carbon\Carbon::parse($activity->date)->format('l') }}</span>
                             </div>
                             <div>
@@ -64,33 +64,26 @@
                                 <label for="feedback" class="form-label">Your Feedback</label>
                                 <textarea name="feedback" id="feedback" class="form-control" rows="3" required>{{ old('feedback') }}</textarea>
                             </div>
-                            <div class="d-flex justify-content-between">
+                            <div class="d-flex flex-column flex-sm-row justify-content-between gap-2">
                                 <button type="submit" class="btn btn-primary">Submit Feedback</button>
                                 <a href="{{ route('home') }}" class="btn btn-secondary">Back</a>
                             </div>
 
                         </form>
                     @else
-                        {{-- <div class="d-flex gap-2 align-items-center">
-                            <form action="{{ route('user.activity.register', $activity->id) }}" method="POST" style="display:inline;">
-                                @csrf
-                                <button type="submit" class="btn btn-success">Register</button>
-                            </form>
-                            <a href="{{ route('home') }}" class="btn btn-secondary">Back</a>
-                        </div> --}}
                         <form action="{{ route('user.activity.register', $activity->id) }}" method="POST" style="display:inline;">
                             @csrf
-                            <div class="d-flex justify-content-between">
-                                <div class="d-flex gap-2 align-items-center">
-                                    <button type="submit" class="btn btn-success">Register</button>
-                                    <div class="text-black-50">
-                                        <input class="form-check-input" type="checkbox" name="terms" id="terms" required>
-                                        <label class="form-check-label" for="terms">
-                                            I acknowledge and accept the <a href="#" target="_blank" class="text-black-50 text-decoration-none fst-italic fw-semibold">Terms and Conditions</a> as stated.
+                            <div class="d-flex flex-column flex-sm-row justify-content-between gap-2">
+                                <div class="d-flex flex-column gap-2 align-items-start w-100">
+                                    <div class="d-flex align-items-center mb-2" style="font-size: 0.70rem;">
+                                        <input class="form-check-input me-1" type="checkbox" name="terms" id="terms" required style="margin-top:0;">
+                                        <label class="form-check-label text-black-50" for="terms" style="font-size: 0.70rem;">
+                                            I acknowledge and accept the <a href="#" target="_blank" class="text-black-50 text-decoration-none fst-italic fw-semibold">Terms and Conditions.</a>
                                         </label>
                                     </div>
                                 </div>
-                                <div>
+                                <div class="d-flex flex-column flex-sm-row justify-content-between gap-2">
+                                    <button type="submit" class="btn btn-primary">Register</button>
                                     <a href="{{ route('home') }}" class="btn btn-secondary">Back</a>
                                 </div>
                             </div>
