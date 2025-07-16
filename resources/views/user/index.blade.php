@@ -182,9 +182,9 @@
                             @foreach($sortedActivities as $idx => $activity)
                                 <div class="col d-flex">
                                     {{-- Activity card for desktop --}}
-                                    <div class="card h-100 w-100 border-0 shadow-sm activity-card position-relative animate__animated animate__fadeInUp p-0 overflow-hidden" style="background: #222; min-height: 320px;">
+                                    <div class="card h-100 w-100 border-0 shadow-sm activity-card position-relative animate__animated animate__fadeInUp p-0 overflow-hidden" style=" min-height: 320px;">
                                         {{-- Card background image --}}
-                                        <div class="activity-bg-img position-absolute top-0 start-0 w-100 h-100" style="background: url('{{ asset('storage/' . ($activity->image_path ?? 'images/pebs-logo.png')) }}') center center/cover no-repeat; opacity:0.25; z-index:1;"></div>
+                                        <div class="activity-bg-img position-absolute top-0 start-0 w-100 h-100" style="background: url('{{ asset('storage/' . ($activity->picture ?? 'pebs-logo.png')) }}') center center/cover no-repeat; z-index:1;"></div>
                                         <div class="card-body d-flex flex-column justify-content-between position-relative" style="z-index:2; min-height:320px;">
                                             <div class="row w-100 mb-2 g-0 align-items-start">
                                                 <div class="col-8 pe-1">
@@ -225,9 +225,9 @@
                                     <div class="col-6 d-flex">
                                         {{-- Activity card for mobile --}}
                                         <div class="card h-100 w-100 border-0 shadow-sm activity-card position-relative p-0 overflow-hidden mb-3"
-                                            style="background: url('{{ asset('storage/' . ($activity->image_path ?? 'images/pebs-logo.png')) }}') center center/cover no-repeat, #222; min-height: 180px;">
+                                            style="background: url('{{ asset('storage/' . ($activity->picture ?? 'pebs-logo.png')) }}') center center/cover no-repeat; min-height: 180px;">
                                             {{-- Card background overlay --}}
-                                            <div class="position-absolute top-0 start-0 w-100 h-100" style="background: rgba(20,20,20,0.55); z-index:1;"></div>
+                                            {{-- <div class="position-absolute top-0 start-0 w-100 h-100" style="z-index:1;"></div> --}}
                                             <div class="card-body d-flex flex-column position-relative" style="z-index:2; min-height:180px; padding:0.75rem 0.5rem;">
                                                 <div class="mb-2">
                                                     {{-- Activity title --}}
@@ -258,7 +258,7 @@
                         <style>
                         .activity-card .activity-bg-img { pointer-events:none; }
                         .activity-card .card-title.text-shadow { text-shadow: 0 2px 8px #fff, 0 1px 2px #000; }
-                        .activity-card .card-body { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(5px); }
+                        .activity-card .card-body { background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(5px); }
                         /* Mobile activity card title: smaller font, 2 lines max, ellipsis */
                         @media (max-width: 576px) {
                             .activity-title-mobile {
