@@ -9,7 +9,7 @@
 @section('content')
     <h1>Admin CRUD Page</h1>
 
-    <a href="{{ route('sa.admin.create') }}" class="btn btn-primary">Add New Admin</a>
+    <a href="{{ route('sa.admin.create') }}" class="btn btn-primary mt-4">Add New Admin</a>
 
     <div class="table-responsive mt-4">
         <table class="table border-0 table-hover mb-0 bg-white">
