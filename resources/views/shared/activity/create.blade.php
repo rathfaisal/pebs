@@ -13,7 +13,13 @@
 @section('title', 'Create Activity')
 
 @section('content')
-    <h1>Create Activity</h1>
+
+    <div class="mb-3">
+        <a href="{{ route('s.activity.index') }}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Back to Activities
+        </a>
+    </div>
+    <h2>Create Activity</h2>
 
     <form action="{{ route('s.activity.store') }}" method="POST" enctype="multipart/form-data">
         @csrf

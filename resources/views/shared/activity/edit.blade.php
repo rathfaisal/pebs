@@ -13,8 +13,12 @@
 @section('title', 'Edit Activity')
 
 @section('content')
-    <h1>Edit Activity</h1>
-
+    <div class="mb-3">
+        <a href="{{ route('s.activity.index') }}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Back to Activities
+        </a>
+    </div>
+    <h2>Edit Activity</h2>
     <form action="{{ route('s.activity.update', $activity->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')

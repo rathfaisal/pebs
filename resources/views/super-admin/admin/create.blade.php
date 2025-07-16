@@ -3,6 +3,11 @@
 @section('title', 'Create Admin')
 
 @section('content')
+    <div class="mb-4">
+        <a href="{{ route('sa.admin.index') }}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Back to Admins
+        </a>
+    </div>
     <h1>Create New Admin</h1>
 
     <form action="{{ route('sa.admin.store') }}" method="POST">

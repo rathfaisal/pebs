@@ -13,7 +13,12 @@
 @section('title', 'Add Image to Gallery for ' . $activity->title)
 
 @section('content')
-    <h1>Add Image to Gallery for {{ $activity->title }}</h1>
+    <div class="mb-4">
+        <a href="{{ route('s.activity.index') }}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Back to Activities
+        </a>
+    </div>
+    <h2 class="text-black-50">Add Image to Gallery for <strong class="fs-normal text-black text-uppercase">{{ $activity->title }}</strong></h2>
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -25,11 +30,10 @@
     @endif
     <form action="{{ route('s.activity.gallery.store', $activity->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
-        <div class="form-group mb-3">
+        <div class="form-group mb-4">
             <label for="images">Images</label>
             <input type="file" name="images[]" id="images" class="form-control" multiple required>
         </div>
-        <button type="submit" class="btn btn-primary">Upload</button>
-        <a href="{{ route('s.activity.gallery', $activity->id) }}" class="btn btn-secondary">Back to Gallery</a>
+        <button type="submit" class="btn btn-primary mt-4">Upload</button>
     </form>
 @endsection

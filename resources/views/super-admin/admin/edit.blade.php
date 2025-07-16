@@ -3,6 +3,11 @@
 @section('title', 'Edit Admin')
 
 @section('content')
+    <div class="mb-4">
+        <a href="{{ route('sa.admin.index') }}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Back to Admins
+        </a>
+    </div>
     <h1>Edit Admin</h1>
 
     <form action="{{ route('sa.admin.update', $admin->id) }}" method="POST">

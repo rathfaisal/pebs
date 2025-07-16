@@ -75,7 +75,7 @@
                 <div class="row d-flex justify-content-center align-items-center">
                     <div class="d-flex justify-content-between col-md-9 col-lg-7">
                         <button type="submit" class="btn btn-success">Update Profile</button>
-                        <a href="{{ route('shared.profile.show') }}" class="btn btn-secondary">Cancel</a>
+                        <a href="{{ route('home') }}" class="btn btn-secondary">Cancel</a>
                     </div>
                 </div>
             </div>

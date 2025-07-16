@@ -99,7 +99,7 @@
         </div>
     </main>
 
-<footer class="footer-user mt-auto w-100 pt-5 mb-4 bg-white text-black-50">
+    <footer class="footer-user mt-auto w-100 pt-5 mb-4 bg-white text-black-50">
         <div class="container-fluid px-4">
             <div class="row align-items-start justify-content-between">
                 <div class="col-md-3 text-start text-md-start mb-md-0 d-flex flex-column align-items-center align-items-md-start justify-content-center gap-2">

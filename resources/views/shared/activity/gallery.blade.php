@@ -13,7 +13,12 @@
 @section('title', 'Gallery for ' . $activity->title)
 
 @section('content')
-    <h1>Gallery for {{ $activity->title }}</h1>
+    <div class="mb-3">
+        <a href="{{ route('s.activity.index') }}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Back to Activities
+        </a>
+    </div>
+    <h2 class="text-black-50">Gallery for <strong class="fs-normal text-black text-uppercase">{{ $activity->title }}</strong></h2>
     <a href="{{ route('s.activity.gallery.add', $activity->id) }}" class="btn btn-success mb-3">Add Image</a>
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
@@ -34,5 +39,4 @@
             <p>No images in the gallery yet.</p>
         @endforelse
     </div>
-    <a href="{{ route('s.activity.index') }}" class="btn btn-secondary mt-3">Back to Activities</a>
 @endsection

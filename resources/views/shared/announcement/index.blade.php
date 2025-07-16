@@ -13,35 +13,46 @@
 @section('title', 'Announcement')
 
 @section('content')
-    <div class="container">
-        <h1>Announcements</h1>
-        <a href="{{ route('announcements.create') }}" class="btn btn-primary">Add Announcement</a>
-        <table class="table">
-            <thead>
+    <h1>Announcements</h1>
+    <a href="{{ route('announcements.create') }}" class="btn btn-primary mt-4">Add Announcement</a>
+
+    <div class="table-responsive mt-4">
+        <table class="table border-0 table-hover mb-0 bg-white">
+            <thead class="table-light">
                 <tr>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Image</th>
-                    <th>Actions</th>
+                    <th class="w-[20%] text-left border-0">Title</th>
+                    <th class="w-[45%] text-left border-0">Description</th>
+                    <th class="w-[27%] text-center border-0">Image</th>
+                    <th class="w-[8%] text-center border-0">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($announcements as $announcement)
                     <tr>
-                        <td>{{ $announcement->title }}</td>
-                        <td>{{ $announcement->description }}</td>
-                        <td>
-                            @if($announcement->image_path)
-                                <img src="{{ asset('storage/' . $announcement->image_path) }}" alt="Announcement Image" width="100">
-                            @endif
+                        <td class="border-0" style="width: 20%;">{{ $announcement->title }}</td>
+                        <td class="border-0" style="width: 45%;">{{ $announcement->description }}</td>
+                        {{-- image --}}
+                        <td class="border-0" style="width: 27%;">
+                            <div class="d-flex gap-1 align-items-center justify-content-center">
+                                @if($announcement->image_path)
+                                    <img src="{{ asset('storage/' . $announcement->image_path) }}" alt="Announcement Image" width="100" height="100" class="img-fluid rounded">
+                                @endif
+                            </div>   
                         </td>
-                        <td>
-                            <a href="{{ route('announcements.edit', $announcement->id) }}" class="btn btn-sm btn-primary">Edit</a>
-                            <form action="{{ route('announcements.destroy', $announcement->id) }}" method="POST" style="display: inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this announcement?')">Delete</button>
-                            </form>
+                        {{-- actions --}}
+                        <td class="border-0" style="width: 8%;">
+                            <div class="d-flex gap-1 align-items-center justify-content-center">
+                                <a href="{{ route('announcements.edit', $announcement->id) }}" class="btn btn-sm btn-warning" title="Edit">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
+                                <form action="{{ route('announcements.destroy', $announcement->id) }}" method="POST" style="display: inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this announcement?')" title="Delete">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                 @endforeach
