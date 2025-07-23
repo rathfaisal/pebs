@@ -43,7 +43,7 @@
                             <span class="badge bg-primary">{{ $activity->users->count() }}</span>
 
                             <a href="{{ route('s.activity.registeredUsers', $activity->id) }}" class="btn btn-info btn-sm" title="View Registered Users">
-                                <i class="bi bi-people"></i> View Details
+                                <i class="bi bi-people"></i> <span class="d-none d-md-inline">View Details</span>
                             </a>
                         </div>
                     </td>
@@ -51,7 +51,7 @@
                     <td class="border-0" style="width: 14%;">
                         <div class="d-flex gap-1 align-items-center justify-content-center">
                             <a href="{{ route('s.activity.gallery', $activity->id) }}" class="btn btn-secondary btn-sm" title="View Gallery">
-                                <i class="bi bi-images"></i> View More
+                                <i class="bi bi-images"></i> <span class="d-none d-md-inline">View More</span>
                             </a>
                             <a href="{{ route('s.activity.gallery.add', $activity->id) }}" class="btn btn-success btn-sm" title="Add Image">
                                 <i class="bi bi-plus-square"></i>
@@ -90,3 +90,4 @@
         </table>
     </div>
 @endsection
+

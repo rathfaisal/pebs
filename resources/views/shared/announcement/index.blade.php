@@ -60,3 +60,21 @@
         </table>
     </div>
 @endsection
+
+@section('link')
+<style>
+    @media (max-width: 991.98px) {
+        .img-fluid {
+            max-width: 80px;
+            max-height: 80px;
+        }
+    }
+    
+    @media (max-width: 767.98px) {
+        .img-fluid {
+            max-width: 50px;
+            max-height: 50px;
+        }
+    }
+</style>
+@endsection

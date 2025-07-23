@@ -36,6 +36,158 @@
         .footer-user .footer-hover-black:focus {
             color: #000 !important;
         }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 991.98px) {
+            .navbar img {
+                height: 45px !important;
+            }
+            .navbar {
+                padding: 0.5rem 0.75rem;
+            }
+            .nav-link {
+                padding: 0.375rem 0.5rem;
+                font-size: 0.85rem;
+            }
+            .dropdown-item {
+                padding: 0.375rem 0.75rem;
+                font-size: 0.85rem;
+            }
+            .container-fluid {
+                padding: 0.75rem;
+            }
+            h1 {
+                font-size: 1.5rem !important;
+                margin-bottom: 0.75rem !important;
+            }
+            h2 {
+                font-size: 1.25rem !important;
+                margin-bottom: 0.75rem !important;
+            }
+            h3 {
+                font-size: 1.1rem !important;
+            }
+            h4 {
+                font-size: 1rem !important;
+            }
+            h5 {
+                font-size: 0.9rem !important;
+            }
+            .btn {
+                padding: 0.375rem 0.75rem;
+                font-size: 0.85rem;
+            }
+            .btn-sm {
+                padding: 0.25rem 0.5rem;
+                font-size: 0.75rem;
+            }
+            .form-control, .form-select, .form-check-input {
+                font-size: 0.85rem;
+            }
+            .form-label {
+                font-size: 0.85rem;
+                margin-bottom: 0.375rem;
+            }
+            .alert {
+                padding: 0.5rem;
+                font-size: 0.85rem;
+            }
+            .card-body {
+                padding: 0.75rem;
+            }
+            .card-header {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.9rem;
+            }
+            .badge {
+                font-size: 0.75rem;
+                padding: 0.25rem 0.5rem;
+            }
+            .footer-user {
+                padding: 0.5rem;
+                font-size: 0.8rem;
+            }
+        }
+        
+        @media (max-width: 767.98px) {
+            .navbar img {
+                height: 35px !important;
+            }
+            .navbar {
+                padding: 0.375rem 0.5rem;
+            }
+            .nav-link {
+                padding: 0.25rem 0.375rem;
+                font-size: 0.75rem;
+            }
+            .dropdown-item {
+                padding: 0.25rem 0.5rem;
+                font-size: 0.75rem;
+            }
+            .container-fluid {
+                padding: 0.5rem;
+            }
+            h1 {
+                font-size: 1.25rem !important;
+                margin-bottom: 0.5rem !important;
+            }
+            h2 {
+                font-size: 1.1rem !important;
+                margin-bottom: 0.5rem !important;
+            }
+            h3 {
+                font-size: 1rem !important;
+            }
+            h4 {
+                font-size: 0.9rem !important;
+            }
+            h5 {
+                font-size: 0.8rem !important;
+            }
+            .btn {
+                padding: 0.25rem 0.5rem;
+                font-size: 0.75rem;
+            }
+            .btn-sm {
+                padding: 0.1875rem 0.375rem;
+                font-size: 0.65rem;
+            }
+            .form-control, .form-select, .form-check-input {
+                padding: 0.375rem 0.5rem;
+                font-size: 0.75rem;
+            }
+            .form-label {
+                font-size: 0.75rem;
+                margin-bottom: 0.25rem;
+            }
+            .alert {
+                padding: 0.375rem;
+                font-size: 0.75rem;
+            }
+            .card-body {
+                padding: 0.5rem;
+            }
+            .card-header {
+                padding: 0.375rem 0.5rem;
+                font-size: 0.8rem;
+            }
+            .badge {
+                font-size: 0.65rem;
+                padding: 0.1875rem 0.375rem;
+            }
+            .footer-user {
+                padding: 0.375rem;
+                font-size: 0.7rem;
+            }
+            /* Activity card specific styling */
+            .activity-title-mobile {
+                font-size: 0.55rem !important;
+            }
+            .countdown-timer {
+                font-size: 0.6rem !important;
+                padding: 0.1875rem 0.375rem !important;
+            }
+        }
     </style>
     @yield('link')
 </head>
