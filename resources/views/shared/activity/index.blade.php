@@ -40,7 +40,7 @@
                     {{-- registered users --}}
                     <td class="border-0" style="width: 13%;">
                         <div class="d-flex gap-2 align-items-center justify-content-center">
-                            <span class="badge bg-primary">{{ $activity->registeredUsers ? $activity->registeredUsers->count() : 0 }}</span>
+                            <span class="badge bg-primary">{{ $activity->users->count() }}</span>
 
                             <a href="{{ route('s.activity.registeredUsers', $activity->id) }}" class="btn btn-info btn-sm" title="View Registered Users">
                                 <i class="bi bi-people"></i> View Details

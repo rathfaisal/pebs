@@ -52,44 +52,54 @@
 
                 <!-- Buttons & Forms Section -->
                 <div class="mb-4">
-                    @if($isRegistered)
-                        <div class="alert alert-success d-inline-flex align-items-center mb-3" role="alert">
-                            <i class="bi bi-check-circle-fill me-2"></i>
-                            <div>You have already signed up for this activity.</div>
-                        </div>
-                        <!-- Feedback form for registered users -->
-                        <form action="{{ route('user.activity.feedback', $activity->id) }}" method="POST" class="">
-                            @csrf
-                            <div class="mb-3">
-                                <label for="feedback" class="form-label">Your Feedback</label>
-                                <textarea name="feedback" id="feedback" class="form-control" rows="3" required>{{ old('feedback') }}</textarea>
+                    @auth
+                        @if($isRegistered)
+                            <div class="alert alert-success d-inline-flex align-items-center mb-3" role="alert">
+                                <i class="bi bi-check-circle-fill me-2"></i>
+                                <div>You have already signed up for this activity.</div>
                             </div>
-                            <div class="d-flex flex-column flex-sm-row justify-content-between gap-2">
-                                <button type="submit" class="btn btn-primary">Submit Feedback</button>
-                                <a href="{{ route('home') }}" class="btn btn-secondary">Back</a>
-                            </div>
-
-                        </form>
-                    @else
-                        <form action="{{ route('user.activity.register', $activity->id) }}" method="POST" style="display:inline;">
-                            @csrf
-                            <div class="d-flex flex-column flex-sm-row justify-content-between gap-2">
-                                <div class="d-flex flex-column gap-2 align-items-start w-100">
-                                    <div class="d-flex align-items-center mb-2" style="font-size: 0.70rem;">
-                                        <input class="form-check-input me-1" type="checkbox" name="terms" id="terms" required style="margin-top:0;">
-                                        <label class="form-check-label text-black-50" for="terms" style="font-size: 0.70rem;">
-                                            I acknowledge and accept the <a href="#" target="_blank" class="text-black-50 text-decoration-none fst-italic fw-semibold">Terms and Conditions.</a>
-                                        </label>
-                                    </div>
+                            <!-- Feedback form for registered users -->
+                            <form action="{{ route('user.activity.feedback', $activity->id) }}" method="POST" class="">
+                                @csrf
+                                <div class="mb-3">
+                                    <label for="feedback" class="form-label">Your Feedback</label>
+                                    <textarea name="feedback" id="feedback" class="form-control" rows="3" required>{{ old('feedback', $existingFeedback) }}</textarea>
                                 </div>
                                 <div class="d-flex flex-column flex-sm-row justify-content-between gap-2">
-                                    <button type="submit" class="btn btn-primary">Register</button>
+                                    <button type="submit" class="btn btn-primary">Submit Feedback</button>
                                     <a href="{{ route('home') }}" class="btn btn-secondary">Back</a>
                                 </div>
-                            </div>
-                        </form>
-
-                    @endif
+                            </form>
+                        @else
+                            <form action="{{ route('user.activity.register', $activity->id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                <div class="d-flex flex-column flex-sm-row justify-content-between gap-2">
+                                    <div class="d-flex flex-column gap-2 align-items-start w-100">
+                                        <div class="d-flex align-items-center mb-2" style="font-size: 0.70rem;">
+                                            <input class="form-check-input me-1" type="checkbox" name="terms" id="terms" required style="margin-top:0;">
+                                            <label class="form-check-label text-black-50" for="terms" style="font-size: 0.70rem;">
+                                                I acknowledge and accept the <a href="#" target="_blank" class="text-black-50 text-decoration-none fst-italic fw-semibold">Terms and Conditions.</a>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-column flex-sm-row justify-content-between gap-2">
+                                        <button type="submit" class="btn btn-primary">Register</button>
+                                        <a href="{{ route('home') }}" class="btn btn-secondary">Back</a>
+                                    </div>
+                                </div>
+                            </form>
+                        @endif
+                    @else
+                        <!-- Message for unauthenticated users -->
+                        <div class="alert alert-info d-inline-flex align-items-center mb-3" role="alert">
+                            <i class="bi bi-info-circle-fill me-2"></i>
+                            <div>Please <a href="{{ route('login') }}" class="alert-link">login</a> or <a href="{{ route('register') }}" class="alert-link">register</a> to join this activity.</div>
+                        </div>
+                        <div class="d-flex flex-column flex-sm-row justify-content-between gap-2">
+                            <a href="{{ route('login') }}" class="btn btn-primary">Login to Register</a>
+                            <a href="{{ route('home') }}" class="btn btn-secondary">Back</a>
+                        </div>
+                    @endauth
                 </div>
                 <!-- Back Button Section (removed, now at top left) -->
             </div>

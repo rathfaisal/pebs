@@ -9,9 +9,9 @@ use App\Http\Controllers\ActivityController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AnnouncementController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -25,12 +25,15 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 
-// User routes
+// User routes - Public access to view pages
+Route::get('/', [UserController::class, 'index'])->name('home');
+Route::get('/index', [UserController::class, 'index']);
+Route::get('/activity/{id}', [UserController::class, 'show'])->name('user.activity.show');
+
+// User routes - Authenticated actions only
 Route::middleware('auth')->group(function () {
-    Route::get('/index', [UserController::class, 'index'])->name('home');
-    Route::get('/activity/{id}', [UserController::class, 'show'])->name('user.activity.show');
     Route::post('/activity/{id}/register', [UserController::class, 'register'])->name('user.activity.register');
-    Route::post('/activity/{id}/feedback', [UserController::class, 'feedback'])->name('user.activity.feedback'); // Feedback submission
+    Route::post('/activity/{id}/feedback', [UserController::class, 'feedback'])->name('user.activity.feedback');
 });
 
 // Admin routes

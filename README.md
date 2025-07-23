@@ -53,7 +53,11 @@ flowchart TD
 - **activities**
   - id, title, description, date, picture, location, deleted_at, timestamps
 - **activity_user** (pivot)
-  - activity_id, user_id
+  - activity_id, user_id, feedback (nullable)
+- **announcements**
+  - id, title, description, image_path (nullable), timestamps
+- **galleries**
+  - id, activity_id (foreign key), image_path, timestamps
 
 #### Database Schema Diagram
 
@@ -81,9 +85,24 @@ erDiagram
     activity_user {
         int activity_id
         int user_id
+        text feedback
+    }
+    announcements {
+        int id
+        string title
+        text description
+        string image_path
+        string timestamps
+    }
+    galleries {
+        int id
+        int activity_id
+        string image_path
+        string timestamps
     }
     users ||--o{ activity_user : registers
     activities ||--o{ activity_user : has
+    activities ||--o{ galleries : contains
 ```
 
 ## Technology Stack

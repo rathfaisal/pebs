@@ -25,7 +25,7 @@ class UserController extends Controller
     {
         $activities = Activity::all();
         $user = auth()->user();
-        $registeredIds = $user->activities->pluck('id')->toArray();
+        $registeredIds = $user ? $user->activities->pluck('id')->toArray() : [];
         $announcement = Announcement::latest()->first();
         return view('user.index', compact('activities', 'registeredIds', 'announcement'));
     }
@@ -34,8 +34,9 @@ class UserController extends Controller
     {
         $activity = Activity::findOrFail($id);
         $user = auth()->user();
-        $isRegistered = $user->activities->contains($activity->id);
-        return view('user.show', compact('activity', 'isRegistered'));
+        $isRegistered = $user ? $user->activities->contains($activity->id) : false;
+        $existingFeedback = $user && $isRegistered ? $user->activities()->where('activity_id', $id)->first()->pivot->feedback ?? '' : '';
+        return view('user.show', compact('activity', 'isRegistered', 'existingFeedback'));
     }
     
     public function register($id)
