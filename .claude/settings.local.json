@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(copy pebs-logo.png icon-192x192.png)",
+      "Bash(copy pebs-logo.png icon-512x512.png)",
+      "Bash(copy pebs-logo.png apple-touch-icon.png)",
+      "Bash(cp:*)"
+    ],
+    "deny": []
+  }
+}

@@ -6,7 +6,24 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>PEBS Management System</title>
+        
+        <!-- PWA Meta Tags -->
+        <meta name="application-name" content="PEBS Management System">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="PEBS">
+        <meta name="description" content="PeBS (Persatuan Belia Selangor) Zon 20 under MBSA - Youth management system">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="msapplication-config" content="/browserconfig.xml">
+        <meta name="msapplication-TileColor" content="#DA251D">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="theme-color" content="#DA251D">
+        
+        <!-- Icons -->
         <link rel="icon" type="image/png" href="{{ asset('images/pebs-logo.png') }}">
+        <link rel="apple-touch-icon" href="{{ asset('images/apple-touch-icon.png') }}">
+        <link rel="manifest" href="{{ asset('manifest.json') }}">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -27,5 +44,19 @@
                 {{ $slot }}
             </div>
         </div>
+        
+        <!-- PWA Service Worker Registration -->
+        <script>
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function() {
+                    navigator.serviceWorker.register('/sw.js')
+                        .then(function(registration) {
+                            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                        }, function(err) {
+                            console.log('ServiceWorker registration failed: ', err);
+                        });
+                });
+            }
+        </script>
     </body>
 </html>

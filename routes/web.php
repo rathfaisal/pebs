@@ -25,6 +25,13 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 
+// PWA Routes
+Route::get('/manifest.json', function () {
+    return response()->file(public_path('manifest.json'), [
+        'Content-Type' => 'application/json',
+    ]);
+});
+
 // User routes - Public access to view pages
 Route::get('/', [UserController::class, 'index'])->name('home');
 Route::get('/index', [UserController::class, 'index']);
