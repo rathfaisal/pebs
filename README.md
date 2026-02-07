@@ -37,6 +37,138 @@ flowchart TD
     D -->|Is| E
 ```
 
+### Use Case Diagrams
+
+#### Super Admin Use Case Diagram
+
+```mermaid
+graph TD
+    subgraph "Super Admin"
+        A[Super Admin]
+    end
+
+    subgraph "Admin Management"
+        B(Create Admin)
+        C(Read Admin)
+        D(Update Admin)
+        E(Delete Admin)
+    end
+
+    subgraph "Activity Management"
+        F(Create Activity)
+        G(Read Activity)
+        H(Update Activity)
+        I(Delete Activity)
+        J(Restore Activity)
+    end
+
+    subgraph "Announcement Management"
+        K(Create Announcement)
+        L(Read Announcement)
+        M(Update Announcement)
+        N(Delete Announcement)
+    end
+    
+    subgraph "Gallery Management"
+        O(Create Gallery)
+        P(Read Gallery)
+        Q(Update Gallery)
+        R(Delete Gallery)
+    end
+
+    A --> B
+    A --> C
+    A --> D
+    A --> E
+    A --> F
+    A --> G
+    A --> H
+    A --> I
+    A --> J
+    A --> K
+    A --> L
+    A --> M
+    A --> N
+    A --> O
+    A --> P
+    A --> Q
+    A --> R
+```
+
+#### Admin Use Case Diagram
+
+```mermaid
+graph TD
+    subgraph "Admin"
+        A[Admin]
+    end
+
+    subgraph "Activity Management"
+        B(Create Activity)
+        C(Read Activity)
+        D(Update Activity)
+        E(Delete Activity)
+    end
+
+    subgraph "User Management"
+        F(View Registered Users)
+    end
+    
+    subgraph "Announcement Management"
+        G(Create Announcement)
+        H(Read Announcement)
+        I(Update Announcement)
+        J(Delete Announcement)
+    end
+    
+    subgraph "Gallery Management"
+        K(Create Gallery)
+        L(Read Gallery)
+        M(Update Gallery)
+        N(Delete Gallery)
+    end
+
+    A --> B
+    A --> C
+    A --> D
+    A --> E
+    A --> F
+    A --> G
+    A --> H
+    A --> I
+    A --> J
+    A --> K
+    A --> L
+    A --> M
+    A --> N
+```
+
+#### User Use Case Diagram
+
+```mermaid
+graph TD
+    subgraph "User"
+        A[User]
+    end
+
+    subgraph "Activity Engagement"
+        B(View Activities)
+        C(Register for Activity)
+        D(View Registration Status)
+    end
+    
+    subgraph "Content Viewing"
+        E(View Announcements)
+        F(View Galleries)
+    end
+
+    A --> B
+    A --> C
+    A --> D
+    A --> E
+    A --> F
+```
+
 ### Main Features
 
 - User authentication (Laravel Breeze)
